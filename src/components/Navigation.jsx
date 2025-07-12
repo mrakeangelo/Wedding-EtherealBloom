@@ -12,11 +12,19 @@ const Navigation = () => {
   const { isDark, toggleTheme } = useTheme();
 
   useEffect(() => {
+    let ticking = false;
+    
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 50);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -42,9 +50,10 @@ const Navigation = () => {
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled 
-            ? 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-lg' 
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
+          isScrolled
+            ? 'bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-lg'
             : 'bg-transparent'
         }`}
       >
@@ -53,6 +62,7 @@ const Navigation = () => {
             {/* Logo */}
             <motion.div
               whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.2 }}
               className="flex items-center space-x-2"
             >
               <div className="text-2xl">🌸</div>
@@ -68,8 +78,9 @@ const Navigation = () => {
                   key={item.name}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
                   onClick={() => scrollToSection(item.href)}
-                  className="flex items-center space-x-1 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-blush-600 dark:hover:text-blush-400 transition-colors"
+                  className="flex items-center space-x-1 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-blush-600 dark:hover:text-blush-400 transition-colors duration-300"
                 >
                   <SafeIcon icon={item.icon} className="w-4 h-4" />
                   <span>{item.name}</span>
@@ -82,8 +93,9 @@ const Navigation = () => {
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
+                transition={{ duration: 0.2 }}
                 onClick={toggleTheme}
-                className="p-2 rounded-full bg-blush-100 dark:bg-gray-800 text-blush-600 dark:text-blush-400 hover:bg-blush-200 dark:hover:bg-gray-700 transition-colors"
+                className="p-2 rounded-full bg-blush-100 dark:bg-gray-800 text-blush-600 dark:text-blush-400 hover:bg-blush-200 dark:hover:bg-gray-700 transition-colors duration-300"
               >
                 <SafeIcon icon={isDark ? FiSun : FiMoon} className="w-5 h-5" />
               </motion.button>
@@ -92,6 +104,7 @@ const Navigation = () => {
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
+                transition={{ duration: 0.2 }}
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className="md:hidden p-2 rounded-full bg-blush-100 dark:bg-gray-800 text-blush-600 dark:text-blush-400"
               >
@@ -108,6 +121,7 @@ const Navigation = () => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
               className="md:hidden bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-t border-blush-200 dark:border-gray-700"
             >
               <div className="px-4 py-4 space-y-3">
@@ -115,8 +129,9 @@ const Navigation = () => {
                   <motion.button
                     key={item.name}
                     whileHover={{ x: 5 }}
+                    transition={{ duration: 0.2 }}
                     onClick={() => scrollToSection(item.href)}
-                    className="flex items-center space-x-3 w-full text-left py-2 text-gray-700 dark:text-gray-200 hover:text-blush-600 dark:hover:text-blush-400 transition-colors"
+                    className="flex items-center space-x-3 w-full text-left py-2 text-gray-700 dark:text-gray-200 hover:text-blush-600 dark:hover:text-blush-400 transition-colors duration-300"
                   >
                     <SafeIcon icon={item.icon} className="w-5 h-5" />
                     <span className="font-medium">{item.name}</span>
@@ -137,10 +152,10 @@ const Navigation = () => {
         }}
         initial={{ scaleX: 0 }}
         animate={{ scaleX: isScrolled ? 1 : 0 }}
-        transition={{ duration: 0.3 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
       />
     </>
   );
 };
 
-export default Navigation;
+export default React.memo(Navigation);

@@ -87,35 +87,17 @@ export default {
         'sans': ['Inter', 'sans-serif'],
       },
       animation: {
-        'float': 'float 6s ease-in-out infinite',
-        'bloom': 'bloom 2s ease-out forwards',
-        'petal-fall': 'petal-fall 8s linear infinite',
-        'sparkle': 'sparkle 2s ease-in-out infinite',
-        'gentle-bounce': 'gentle-bounce 3s ease-in-out infinite',
+        'float': 'gentleFloat 6s ease-in-out infinite',
+        'fade-in': 'smoothFadeIn 0.6s ease-out forwards',
+        'rotate': 'smoothRotate 20s linear infinite',
       },
-      keyframes: {
-        float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-20px)' },
-        },
-        bloom: {
-          '0%': { transform: 'scale(0.8)', opacity: '0' },
-          '50%': { transform: 'scale(1.05)', opacity: '0.8' },
-          '100%': { transform: 'scale(1)', opacity: '1' },
-        },
-        'petal-fall': {
-          '0%': { transform: 'translateY(-100vh) rotate(0deg)', opacity: '1' },
-          '100%': { transform: 'translateY(100vh) rotate(360deg)', opacity: '0' },
-        },
-        sparkle: {
-          '0%, 100%': { opacity: '0.3', transform: 'scale(0.8)' },
-          '50%': { opacity: '1', transform: 'scale(1.2)' },
-        },
-        'gentle-bounce': {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-10px)' },
-        }
-      }
+      transitionTimingFunction: {
+        'smooth': 'cubic-bezier(0.4, 0, 0.2, 1)',
+      },
+      transitionDuration: {
+        '400': '400ms',
+        '600': '600ms',
+      },
     },
   },
   plugins: [],

@@ -1,123 +1,164 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* Custom scrollbar */
+/* Performance optimizations */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Smooth transitions for all elements */
+*,
+*::before,
+*::after {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
+}
+
+/* Hardware acceleration for smooth animations */
+.hardware-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Smooth background transitions */
+.bg-transition {
+  transition: background 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Custom scrollbar with smooth behavior */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
   background: #f1f5f9;
+  transition: background 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(to bottom, #f472b6, #ec4899);
   border-radius: 4px;
+  transition: background 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(to bottom, #ec4899, #db2777);
 }
 
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Selection colors */
+/* Optimized selection colors */
 ::selection {
   background-color: #f472b6;
   color: white;
 }
 
-/* Custom animations */
-@keyframes shimmer {
-  0% {
-    background-position: -200px 0;
+/* Reduced motion animations */
+@keyframes gentleFloat {
+  0%, 100% {
+    transform: translateY(0px) translateZ(0);
   }
-  100% {
-    background-position: calc(200px + 100%) 0;
+  50% {
+    transform: translateY(-10px) translateZ(0);
   }
 }
 
-.shimmer {
-  animation: shimmer 2s infinite;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
-  background-size: 200px 100%;
+@keyframes smoothFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) translateZ(0);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) translateZ(0);
+  }
 }
 
-/* Floral decorations */
-.floral-border {
-  position: relative;
+@keyframes smoothRotate {
+  from {
+    transform: rotate(0deg) translateZ(0);
+  }
+  to {
+    transform: rotate(360deg) translateZ(0);
+  }
 }
 
-.floral-border::before,
-.floral-border::after {
-  content: '';
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23f472b6'%3E%3Cpath d='M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 6.5V9H21ZM3 9V7L9 6.5V9H3ZM15 18.5L21 18V16H15V18.5ZM9 18.5L3 18V16H9V18.5ZM12 22C10.9 22 10 21.1 10 20C10 18.9 10.9 18 12 18C13.1 18 14 18.9 14 20C14 21.1 13.1 22 12 22Z'/%3E%3C/svg%3E");
-  background-size: contain;
-  opacity: 0.3;
-}
-
-.floral-border::before {
-  top: -20px;
-  left: -20px;
-  transform: rotate(-15deg);
-}
-
-.floral-border::after {
-  bottom: -20px;
-  right: -20px;
-  transform: rotate(15deg);
-}
-
-/* Glass morphism effect */
+/* Smooth glass morphism effect */
 .glass {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.glass-dark {
-  background: rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+.glass:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px) translateZ(0);
 }
 
-/* Gradient text */
-.gradient-text {
-  background: linear-gradient(135deg, #f472b6, #ec4899, #a855f7);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Hover effects */
+/* Smooth hover effects */
 .hover-lift {
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
 }
 
 .hover-lift:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(244, 114, 182, 0.2);
+  transform: translateY(-5px) translateZ(0);
+  box-shadow: 0 10px 25px rgba(244, 114, 182, 0.15);
 }
 
-/* Focus styles */
+/* Optimized focus styles */
 .focus-ring:focus {
   outline: 2px solid #f472b6;
   outline-offset: 2px;
+  transition: outline 0.2s ease;
 }
 
-/* Loading animations */
-.pulse-slow {
-  animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+/* Performance optimizations for animations */
+.animate-float {
+  animation: gentleFloat 6s ease-in-out infinite;
+  transform: translateZ(0);
+}
+
+.animate-fade-in {
+  animation: smoothFadeIn 0.6s ease-out forwards;
+}
+
+.animate-rotate {
+  animation: smoothRotate 20s linear infinite;
+  transform: translateZ(0);
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .hardware-accelerated {
+    transform: none !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .glass {
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid #000;
+  }
 }
 
 /* Print styles */
@@ -127,19 +168,48 @@ html {
   }
 }
 
-/* Accessibility */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+/* Smooth gradient transitions */
+.gradient-bg {
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
 
-/* High contrast mode */
-@media (prefers-contrast: high) {
-  .glass {
-    background: rgba(255, 255, 255, 0.95);
-    border: 2px solid #000;
+/* Optimized floating elements */
+.floating-element {
+  pointer-events: none;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Smooth loading states */
+.loading-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  background-size: 200px 100%;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
   }
 }

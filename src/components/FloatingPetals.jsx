@@ -1,37 +1,52 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 
 const FloatingPetals = () => {
   const petals = ['🌸', '🌺', '🌻', '🌷', '🌹', '🌼'];
+  
+  // Memoize petal configurations to prevent re-renders
+  const petalConfigs = useMemo(() => 
+    [...Array(8)].map((_, i) => ({
+      id: i,
+      emoji: petals[Math.floor(Math.random() * petals.length)],
+      initialX: Math.random() * 100,
+      delay: Math.random() * 15,
+      duration: 25 + Math.random() * 10,
+    })), []
+  );
 
   return (
     <div className="fixed inset-0 pointer-events-none z-10 overflow-hidden">
-      {[...Array(15)].map((_, i) => (
+      {petalConfigs.map((config) => (
         <motion.div
-          key={i}
-          className="absolute text-lg opacity-30"
+          key={config.id}
+          className="absolute text-lg opacity-20 floating-element"
           initial={{
-            x: Math.random() * window.innerWidth,
-            y: window.innerHeight + 50,
+            x: `${config.initialX}vw`,
+            y: '110vh',
             rotate: 0,
           }}
           animate={{
-            y: -50,
+            y: '-10vh',
             rotate: 360,
-            x: Math.random() * window.innerWidth,
+            x: `${config.initialX + Math.sin(config.id) * 20}vw`,
           }}
           transition={{
-            duration: 20 + Math.random() * 15,
+            duration: config.duration,
             repeat: Infinity,
-            delay: Math.random() * 20,
+            delay: config.delay,
             ease: 'linear',
           }}
+          style={{
+            willChange: 'transform',
+            backfaceVisibility: 'hidden',
+          }}
         >
-          {petals[Math.floor(Math.random() * petals.length)]}
+          {config.emoji}
         </motion.div>
       ))}
     </div>
   );
 };
 
-export default FloatingPetals;
+export default React.memo(FloatingPetals);
